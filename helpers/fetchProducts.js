@@ -2,14 +2,15 @@ const fetchProducts = async (nomeProduto) => {
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${nomeProduto}`;
   const result = await fetch(url);
   const data = await result.json();
-   return data; 
+  return data;
 };
 
 async function requestComputador() {
-  await fetchProducts('computador');
+  const data = await fetchProducts('computador');
+  return data;
 }
 
-requestComputador();
+// requestComputador();
 
 if (typeof module !== 'undefined') {
   module.exports = {
