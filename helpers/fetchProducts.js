@@ -10,7 +10,7 @@ async function requestComputador() {
   return data;
 }
 
-// requestComputador();
+requestComputador();
 
 if (typeof module !== 'undefined') {
   module.exports = {
