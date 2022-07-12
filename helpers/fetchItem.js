@@ -4,6 +4,7 @@ const fetchItem = async (item) => {
   const data = await result.json();
   return data;
 };
+
 fetchItem('MLB1615760527');
 
 if (typeof module !== 'undefined') {
