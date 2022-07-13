@@ -1,3 +1,8 @@
+// const lista = require('./helpers/getSavedCartItems');
+
+// const saveCartItems = require('./helpers/saveCartItems');
+const itemsCart = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +17,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li;
+  
+  return li; 
 };
 
 const createCustomElement = (element, className, innerText) => {
@@ -34,7 +40,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 async function listarCartItens(item) {
-  const itemsCart = document.querySelector('.cart__items');
+  // const itemsCart = document.querySelector('.cart__items');
     const produtoCart = await fetchItem(item);
       const itemProductCart = createCartItemElement({
         sku: produtoCart.id,
@@ -42,19 +48,22 @@ async function listarCartItens(item) {
         salePrice: produtoCart.price,
     });
     
-    itemsCart.appendChild(itemProductCart);
+    itemsCart.appendChild(itemProductCart); 
+    const cartItemsave = itemsCart.innerHTML;
+    saveCartItems(cartItemsave);
+    // session
   }
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 function listarCart() {
-  const btnAdicionar = document.querySelectorAll('.item__add');
+ const btnAdicionar = document.querySelectorAll('.item__add');
    btnAdicionar.forEach((btn) => {
     btn.addEventListener('click', (event) => {
       const valueId = event.target.parentNode;
       const id = getSkuFromProductItem(valueId);
-      listarCartItens(id); 
-    });
+      listarCartItens(id);    
+   });
   });
 }
 
@@ -74,5 +83,9 @@ async function listarItens() {
 }
 
 window.onload = () => { 
-  listarItens();
-};
+  const lista = getSavedCartItems(); 
+  document.querySelector('.cart__items').innerHTML = lista;
+   
+  itemsCart.addEventListener('click', cartItemClickListener);
+   listarItens();
+   };
