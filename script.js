@@ -9,17 +9,17 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-const cartItemClickListener = (event) => {
- event.target.remove();
-};
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+
+function precoTotal() {
+  const totalPreco = document.querySelector('.total-price');
+  itemChild = itemsCart.children;
+  const preco = Array.from(itemChild);
+  const precoFinal = [];
+  preco.forEach((item) => precoFinal.push(item.innerHTML.split('$')[1]));
+  const total = precoFinal.reduce((acc, produto) => acc + Number(produto), 0);
   
-  return li; 
-};
+  totalPreco.innerHTML = (Math.round(total * 100) / 100);
+  }
 
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
@@ -39,6 +39,19 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  precoTotal();
+ };
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  
+  return li; 
+};
 async function listarCartItens(item) {
   // const itemsCart = document.querySelector('.cart__items');
     const produtoCart = await fetchItem(item);
@@ -50,6 +63,7 @@ async function listarCartItens(item) {
     
     itemsCart.appendChild(itemProductCart); 
     const cartItemsave = itemsCart.innerHTML;
+    precoTotal();
     saveCartItems(cartItemsave);
     // session
   }
@@ -88,4 +102,5 @@ window.onload = () => {
    
   itemsCart.addEventListener('click', cartItemClickListener);
    listarItens();
+   precoTotal();
    };
