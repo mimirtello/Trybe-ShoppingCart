@@ -2,6 +2,7 @@
 
 // const saveCartItems = require('./helpers/saveCartItems');
 const itemsCart = document.querySelector('.cart__items');
+const btnEsvaziar = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -96,6 +97,12 @@ async function listarItens() {
  listarCart();
 }
 
+function esvaziarCarrinho() {
+btnEsvaziar.addEventListener('click', () => {
+  itemsCart.innerHTML = '';
+});
+}
+
 window.onload = () => { 
   const lista = getSavedCartItems(); 
   document.querySelector('.cart__items').innerHTML = lista;
@@ -103,4 +110,5 @@ window.onload = () => {
   itemsCart.addEventListener('click', cartItemClickListener);
    listarItens();
    precoTotal();
-   };
+   esvaziarCarrinho();
+ };
