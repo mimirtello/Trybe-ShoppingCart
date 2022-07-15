@@ -24,7 +24,7 @@ function precoTotal() {
   preco.forEach((item) => precoFinal.push(item.innerHTML.split('$')[1]));
   const total = precoFinal.reduce((acc, produto) => acc + Number(produto), 0);
   
-  totalPreco.innerHTML = (Math.round(total * 100) / 100);
+  totalPreco.innerHTML = `Total ${(Math.round(total * 100) / 100)}`;
   }
 
 const createCustomElement = (element, className, innerText) => {
